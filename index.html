@@ -122,6 +122,9 @@ a{color:inherit}
 details.more li{overflow-wrap:anywhere}
 .it h4{margin:0;font-weight:400;font-size:21px;line-height:1.35;display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px}
 .must-b{font-size:14px;background:var(--coral);border:2.5px solid var(--ink);border-radius:999px;padding:0 9px;line-height:1.6;white-space:nowrap}
+.stamp-b{font-size:14px;background:var(--take);border:2.5px solid var(--ink);border-radius:999px;padding:0 9px;line-height:1.6;white-space:nowrap}
+.book-b{font-size:14px;background:var(--yellow);border:2.5px solid var(--ink);border-radius:999px;padding:0 9px;line-height:1.6;white-space:nowrap}
+.stampnote{font-size:15px;color:var(--ink-soft);margin:2px 0 8px}
 .it .note{font-size:17px;color:var(--ink-soft);margin-top:3px}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
 .tag{font-size:15px;border:2.5px solid var(--ink);border-radius:14px;padding:2px 10px;line-height:1.45;display:inline-block;max-width:100%;overflow-wrap:anywhere}
@@ -315,7 +318,7 @@ details.more ul{margin:8px 0 0;padding:10px 14px 10px 30px;background:var(--mizu
 <section id="plan" class="card">
   <h2 class="sec-h"><span class="blob" style="background:var(--yellow)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="4" fill="none" stroke="#3E3A39" stroke-width="2.5"/><path d="M3 10h18M8 3v4M16 3v4" stroke="#3E3A39" stroke-width="2.5" stroke-linecap="round"/></svg></span>每日行程</h2>
   <div class="legend" aria-label="交通標籤說明">
-    <span class="tag mrt">MRT</span><span class="tag bus">巴士</span><span class="tag grab">Grab</span><span class="tag tram">單軌／接駁</span><span class="tag walk">步行</span><span class="must-b">必去</span>
+    <span class="tag mrt">MRT</span><span class="tag bus">巴士</span><span class="tag grab">Grab</span><span class="tag tram">單軌／接駁</span><span class="tag walk">步行</span>
   </div>
   <div class="tabs" role="tablist" id="tabs" aria-label="選擇日期"></div>
   <div class="panel" id="panel" role="tabpanel"></div>
@@ -392,61 +395,58 @@ const DAYS=[
  {t:"約1:00pm",n:"The Verandah Residences",note:"參觀、放低行李、傾吓偈",tags:[T("grab","T4 Grab 約30–35分")],more:["4人連行李叫 GrabCar 6-seater 或 XL，約 S$35–50","T4 嘅 Grab 上車點喺 Arrival Hall 出口外"]},
  {t:"5:15pm",n:"往 Mercure ICON check-in",note:"一齊陪媽媽、Jenny姨姨入住",tags:[T("grab","Grab 約15分")],more:["MRT：Haw Par Villa → HarbourFront 轉紫線 → Chinatown，出閘直連酒店，約30分鐘","巴士：143 或 51 一程車到 Eu Tong Sen St，再行約8分鐘"]},
  {t:"6:15pm",n:"往 Esplanade",tags:[T("grab","Grab 約10分")],more:["MRT：Telok Ayer → Promenade（3站），經地下通道行約8分鐘"]},
- {t:"6:30pm",n:"Supply & Demand 晚餐",must:1,note:"Esplanade Mall，海邊 golden hour"},
- {t:"7:45pm",n:"Merlion Park 魚尾獅",must:1,note:"日落後看夜景",tags:[T("walk","行 Jubilee Bridge 約10分")],more:["旁邊 One Fullerton Starbucks 可以蓋印"]},
+ {t:"6:30pm",n:"Supply & Demand 晚餐",must:1,booked:"已訂位 6:30pm",note:"Esplanade Mall，海邊 golden hour"},
+ {t:"7:45pm",n:"Merlion Park 魚尾獅",must:1,stamp:1,note:"日落後看夜景；旁邊 Starbucks One Fullerton（1 Fullerton Rd #01-04）可以蓋印，記得攞免費蓋印簿；星期四開到 11:30pm",tags:[T("walk","行 Jubilee Bridge 約10分")]},
  {t:"8:05pm",n:"Jubilee Bridge → Helix Bridge",note:"沿海邊行去金沙",tags:[T("walk","步行約15–20分")]},
  {t:"8:15pm",n:"The Shoppes at Marina Bay Sands",note:"大部分店 10pm 關；Rain Oculus、室內運河"},
  {t:"9:00pm",n:"Spectra 燈光水舞",must:1,note:"MBS Event Plaza（商場門口海邊）；完場後仍有約45分鐘可逛",more:["Spectra 每晚通常 8pm、9pm 兩場，出發前喺官網確認"]},
  {t:"9:30pm",n:"分頭回程",tags:[T("mrt","Mercure 組：Bayfront → Telok Ayer 2站"),T("mrt","Verandah 組：黃線一程車回 Haw Par Villa")],more:["Bayfront MRT 喺金沙商場地底","Grab：去酒店約10分鐘；去 Verandah 約20分鐘"]}
 ],tips:["Merlion 行到 Helix Bridge 實際要15–20分鐘，8:05pm 出發會遲少少，唔影響 9pm Spectra。","今日 4 人，叫普通 GrabCar 已經夠。"]},
 {id:"d2",tab:"10/16",wk:"五",title:"烏節路 · 聖淘沙",sub:"ION → Somerset → VivoCity → Sentosa",meet:"集合：ION Orchard B4 亞坤",items:[
- {t:"10:30am",n:"Ya Kun 亞坤咖椰多士",must:1,note:"ION Orchard B4（#B4-49），brunch",tags:[T("grab","Mercure 組 Grab 約15分"),T("grab","Verandah 組 Grab 約20分")],more:["Mercure 組 MRT：Chinatown → Outram Park 轉啡色線 → Orchard（3站），約20分鐘","Verandah 組 MRT：Haw Par Villa → HarbourFront → Outram Park → Orchard，約40分鐘","巴士 143：兩邊都一程車到 Orchard Turn / ION"]},
- {t:"11:15am",n:"Liat Towers Starbucks",must:1,note:"新加坡第一間 Starbucks；蓋印、攞免費印仔簿",tags:[T("walk","由 ION 行約5分")]},
+ {t:"10:30am",n:"Ya Kun 亞坤咖央多士",must:1,note:"ION Orchard B4（#B4-49），brunch",tags:[T("grab","Mercure 組 Grab 約15分"),T("grab","Verandah 組 Grab 約20分")],more:["Mercure 組 MRT：Chinatown → Outram Park 轉啡色線 → Orchard（3站），約20分鐘","Verandah 組 MRT：Haw Par Villa → HarbourFront → Outram Park → Orchard，約40分鐘","巴士 143：兩邊都一程車到 Orchard Turn / ION"]},
+ {t:"11:15am",n:"Liat Towers Starbucks",must:1,stamp:1,note:"新加坡第一間 Starbucks（541 Orchard Rd #01-01A）；24 小時營業；蓋印",tags:[T("walk","由 ION 行約5分")]},
  {t:"11:30am",n:"Orchard Road 逛街",note:"ION → Takashimaya → Paragon，一路向 Somerset 行；午餐喺商場食",tags:[T("walk","約1.5公里")]},
  {t:"1:45pm",n:"Yo-Chi 乳酪雪糕",note:"Orchard Central 地下，Somerset 站旁邊"},
- {t:"2:15pm",n:"VivoCity 怡豐城",note:"逛約1小時15分鐘；5:30pm 食晚飯，少食小食",tags:[T("grab","Grab 約15分")],more:["MRT：Somerset → Dhoby Ghaut 轉紫線 → HarbourFront，約25分鐘","巴士：143 往 Jurong East 方向，約30–35分鐘"]},
- {t:"3:30pm",n:"入聖淘沙",note:"VivoCity 3樓上車",tags:[T("tram","Sentosa Express → Beach 站"),T("tram","轉 Beach Tram 去 Palawan")],more:["入島費約 S$4，可以拍卡；島內單軌同 Beach Tram 免費"]},
- {t:"3:45pm",n:"Palawan Beach 吊橋",note:"帶防曬同水；吊橋約 9am–6:30pm 開放"},
- {t:"4:00pm",n:"亞洲大陸最南端",must:1,note:"過吊橋上小島，有兩座木製觀景塔"},
- {t:"4:25pm",n:"歪脖子樹",note:"最南端附近嘅斜椰樹打卡位；要踩幾步沙，波鞋都得"},
- {t:"4:45pm",n:"Starbucks WEAVE（約5:05pm 到）",must:1,note:"蓋印、限定商品",tags:[T("tram","Beach Tram → Beach 站"),T("tram","Sentosa Express 2站到 Resorts World")]},
- {t:"5:30pm",n:"Chatterbox Café 晚餐",must:1,note:"已訂 5:30pm；文華雞飯；WEAVE #02-207，食約55分鐘"},
+ {t:"2:15pm",n:"VivoCity 怡豐城",note:"逛約1小時45分鐘；5:30pm 食晚飯，少食小食",tags:[T("grab","Grab 約15分")],more:["MRT：Somerset → Dhoby Ghaut 轉紫線 → HarbourFront，約25分鐘","巴士：143 往 Jurong East 方向，約30–35分鐘"]},
+ {t:"4:00pm",n:"入聖淘沙",note:"VivoCity 3樓上車",tags:[T("tram","Sentosa Express → Beach 站"),T("tram","轉 Beach Tram 去 Palawan")],more:["入島費約 S$4，可以拍卡；島內單軌同 Beach Tram 免費"]},
+ {t:"4:15pm",n:"Palawan Beach · 歪脖子樹",note:"大陸最南端吊橋因維修封閉，唔可以過橋上小島；喺岸邊影吊橋同小島、去歪脖子樹打卡（要踩幾步沙，波鞋都得）；觀景位旁邊有郵筒，可以買明信片寄返香港",more:["帶防曬同水","明信片售賣機 24 小時開"]},
+ {t:"4:45pm",n:"Starbucks WEAVE（約5:05pm 到）",must:1,stamp:1,note:"WEAVE 地下 #01-221/222；每日開到 10pm；蓋印、限定商品",tags:[T("tram","Beach Tram → Beach 站"),T("tram","Sentosa Express 2站到 Resorts World")]},
+ {t:"5:30pm",n:"Chatterbox Café 晚餐",must:1,booked:"已訂位 5:30pm",note:"文華雞飯；WEAVE #02-207，食約55分鐘"},
  {t:"6:25pm",n:"Siloso Beach 日落（6:45pm）",note:"日落約6:52",tags:[T("tram","Sentosa Express 到 Beach 站"),T("walk","行約5分")]},
- {t:"7:40pm",n:"Wings of Time 時光之翼",must:1,note:"海上煙花水舞，約20分鐘"},
+ {t:"7:40pm",n:"Wings of Time 時光之翼",must:1,booked:"已訂票",note:"海上煙花水舞，約20分鐘"},
  {t:"約8:05pm",n:"回程",tags:[T("tram","Sentosa Express 到 VivoCity"),T("mrt","Mercure 組：紫線 2站到 Chinatown"),T("mrt","Verandah 組：黃線 4站到 Haw Par Villa")],more:["Grab：去酒店約15分鐘；去 Verandah 約15分鐘"]},
  {t:"凌晨0:45",n:"Eric 抵達（TR983，T1）",note:"其實係星期六凌晨；MRT 已停駛",tags:[T("grab","T1 Grab 去 Verandah 約25–30分")],more:["深夜 Grab 有附加費，約 S$30–45","T1 嘅 Grab 上車點喺 Arrival Hall 出口外"]}
-],tips:["落雨或雷暴：吊橋可能封閉，可以跳過 Palawan，喺 VivoCity 多逛一陣先去 WEAVE；Wings of Time 暫停的話，問職員可否改 8:40pm 場。"],
-backup:{h:"如果吊橋封咗",l:["Palawan 照樣值得去：岸邊影到吊橋同小島，歪脖子樹喺岸上，觀景位旁邊有新郵筒可以寄明信片返香港。","唔過橋慳到約25分鐘。建議：VivoCity 逛到 4:00pm 先入島，4:15–4:45pm 喺 Palawan 影相，之後照原定 4:45pm 去 WEAVE。","出發前一日睇 Sentosa 官網，或者到 Beach 站詢問處問（9am–9pm）。"]}},
+],tips:["大陸最南端吊橋因維修封閉，所以今日喺 VivoCity 逛耐啲，4:00pm 先入島，Palawan 只喺岸邊影相。","落雨或雷暴：可以跳過 Palawan，喺 VivoCity 多逛一陣先去 WEAVE；Wings of Time 暫停的話，問職員可否改 8:40pm 場。"]},
 {id:"d3",tab:"10/17",wk:"六",title:"牛車水 · 濱海灣花園",sub:"Chinatown → 返酒店休息 → Gardens by the Bay → 老巴剎",meet:"集合：Chinatown Complex 2樓",items:[
  {t:"10:30am",n:"Chinatown Complex 早午餐",must:1,note:"Uncle Ah Teck #02-51 + 安珍 #02-112 + Chai Wee 魷魚 #02-59；坐安珍嗰邊舒服啲",tags:[T("walk","Mercure 組行約10分"),T("grab","Verandah 組 Grab 約15分")],more:["Uncle Ah Teck 星期六 8am–2pm，會賣完，10:30am 已係最遲","Verandah 組巴士：143 或 51 一程車到 Eu Tong Sen St，約30–40分鐘","Verandah 組 MRT：Haw Par Villa → HarbourFront → Chinatown，約25分鐘"]},
  {t:"11:25am",n:"Chinatown Visitor Centre 手信",note:"Kreta Ayer Square，佛牙寺旁邊",tags:[T("walk","步行約3分")]},
  {t:"11:50am",n:"佛牙寺 → 馬里安曼興都廟",note:"沿 South Bridge Rd 行，門外拍照就好",tags:[T("walk","步行")]},
  {t:"12:05pm",n:"寶塔街 → 廟街",note:"Singapore Wow shop；由興都廟對面入 Pagoda St，經 Trengganu St 轉入 Temple St",tags:[T("walk","步行")]},
- {t:"12:40pm",n:"Starbucks 37 Smith Street",must:1,note:"百年老店屋；蓋印、限定商品、Merlion Bearista"},
+ {t:"12:40pm",n:"Starbucks 37 Smith Street",must:1,stamp:1,note:"百年老店屋（#01-01 & #02-01）；星期六開到 11pm；蓋印、限定商品、Merlion Bearista"},
  {t:"1:05pm",n:"南洋老咖啡 Kopi",note:"坐低飲 kopi 歇腳，約45分鐘",tags:[T("walk","步行約5分")]},
  {t:"2:00pm",n:"返 Mercure 休息",note:"放低手信、去廁所，約20分鐘",tags:[T("walk","步行約7分")]},
- {t:"2:30pm",n:"Floral Fantasy 花藝奇境",note:"約1小時；要搭 MRT，由 Mercure 出發門口到門口約15分鐘",tags:[T("walk","Mercure 地下直連 Telok Ayer 站"),T("mrt","Telok Ayer → Bayfront 2站"),T("walk","Exit B 出，經地下通道行約5分")],more:["Grab：約10分鐘，5人要叫 6-seater","上面「步行約7分」係指由南洋老咖啡行返 Mercure，唔係去 Floral Fantasy"]},
- {t:"3:45pm",n:"Flower Dome 花穹",note:"約1小時15分鐘",tags:[T("tram","Bayfront Plaza 接駁車 S$3 來回")],more:["大雨或閃電時接駁車暫停，可以行連接通道，約10–15分鐘"]},
- {t:"5:00pm",n:"Cloud Forest 雲霧林",must:1,note:"室內瀑布；約1小時15分鐘",tags:[T("walk","同 Flower Dome 相連，行約2分")]},
- {t:"6:30pm",n:"OCBC Skyway → Supertree Grove",must:1,note:"6:52 日落、擎天大樹亮燈；7:15 落返地面搵位坐；7:45 Garden Rhapsody → 8:00 Borealis",tags:[T("walk","由溫室行約10分")],more:["閃電或大雨 Skyway 會關，直接喺地面睇表演"]},
+ {t:"2:30pm",n:"Floral Fantasy 花藝奇境",booked:"已訂票",note:"約1小時；要搭 MRT，由 Mercure 出發門口到門口約15分鐘",tags:[T("walk","Mercure 地下直連 Telok Ayer 站"),T("mrt","Telok Ayer → Bayfront 2站"),T("walk","Exit B 出，經地下通道行約5分")],more:["Grab：約10分鐘，5人要叫 6-seater","上面「步行約7分」係指由南洋老咖啡行返 Mercure，唔係去 Floral Fantasy"]},
+ {t:"3:45pm",n:"Flower Dome 花穹",booked:"已訂票",stamp:1,note:"約1小時15分鐘；花園內 Starbucks（近 Golden Garden，18 Marina Gardens Drive #02-03）可以蓋印，星期六開到 11pm",tags:[T("tram","Bayfront Plaza 接駁車 S$3 來回")],more:["大雨或閃電時接駁車暫停，可以行連接通道，約10–15分鐘"]},
+ {t:"5:00pm",n:"Cloud Forest 雲霧林",must:1,booked:"已訂票",note:"室內瀑布；約1小時15分鐘",tags:[T("walk","同 Flower Dome 相連，行約2分")]},
+ {t:"6:30pm",n:"OCBC Skyway → Supertree Grove",must:1,booked:"已訂票",note:"6:52 日落、擎天大樹亮燈；7:15 落返地面搵位坐；7:45 Garden Rhapsody → 8:00 Borealis",tags:[T("walk","由溫室行約10分")],more:["閃電或大雨 Skyway 會關，直接喺地面睇表演"]},
  {t:"8:45pm",n:"Lau Pa Sat 沙爹宵夜",note:"經 Bayfront 站 photogenic escalator 打卡",tags:[T("mrt","Bayfront → Downtown 1站"),T("walk","再行約5分")]},
  {t:"宵夜後",n:"分頭回程",tags:[T("walk","Mercure 組行約8分"),T("grab","Verandah 組 Grab 約15分")],more:["Verandah 組巴士：10 號由 Shenton Way 一程車，夜晚留意尾班","Verandah 組 MRT：Downtown → Bayfront 轉黃線 → Haw Par Villa，約35分鐘"]}
 ],tips:["今日 5 人同行（Eric 加入），一齊 Grab 要叫 6-seater。","Skyway 同擎天大樹表演遇閃電會暫停。"]},
-{id:"d4",tab:"10/18",wk:"日",title:"甘榜格南 · 克拉碼頭",sub:"阿拉伯街 → 政府大廈 → 宏茂橋 → 克拉碼頭",meet:"集合：白蘭閣街蝦麵（243 Beach Rd）",items:[
- {t:"10:00am",n:"Blanco Court Prawn Mee 蝦麵",must:1,note:"可以分著食，留肚食午餐",tags:[T("mrt","Mercure 組：Telok Ayer → Bugis 4站"),T("grab","Verandah 組 Grab 約20分")],more:["Mercure 組出 Bugis 站再行約7分鐘","Verandah 組巴士：51 號一程車到 Victoria St，約45–50分鐘","星期日排隊較長"]},
- {t:"10:45am",n:"Kampong Glam 阿拉伯區",note:"蘇丹回教堂 → Arab Street → Haji Lane（店舖約11am開）",tags:[T("walk","步行")]},
- {t:"12:30pm",n:"The Coconut Club 椰漿飯",must:1,note:"269 Beach Road",tags:[T("walk","步行")]},
- {t:"2:15pm",n:"CHIJMES 讚美廣場",note:"百年教堂；周末多數有婚禮，睇外觀、迴廊同庭園，約20–30分鐘",tags:[T("grab","Grab 約5–8分")],more:["亦可以步行約15分鐘"]},
- {t:"3:00pm",n:"Suntec City 財富之泉",note:"冷氣歇腳約1小時45分鐘；指定時段可以繞噴泉行圈許願，出發前查時段",tags:[T("grab","Grab 約5分")],more:["亦可以經 Raffles City 地下 CityLink 行入去，約12分鐘，有冷氣"]},
- {t:"5:30pm",n:"Mellben 龍海鮮螃蟹王",must:1,note:"已訂 5:30pm；瓦煲螃蟹米粉湯；宏茂橋 Blk 232",tags:[T("grab","4:45pm 出發，Grab 約25–30分")],more:["星期日傍晚叫車慢，可以 4:35pm 先叫","太攰的話：睇完 CHIJMES 家人先返酒店休息，再由酒店 Grab 過嚟","MRT：City Hall → Ang Mo Kio（紅線9站），約45分鐘"]},
- {t:"7:45pm",n:"舊禧街警察局",note:"夜晚彩色窗亮燈",tags:[T("grab","Grab 約25分")],more:["MRT：Ang Mo Kio → Dhoby Ghaut → Clarke Quay，約35分鐘"]},
- {t:"8:05pm",n:"新加坡河遊船",must:1,note:"Clarke Quay Jetty（Hooters 旁）上船，約40分鐘來回，經 Boat Quay、魚尾獅、金沙；星期日做到10:30pm",tags:[T("walk","警察局對面過橋")]},
- {t:"8:55pm",n:"Clarke Quay 河邊散步",note:"散步作結",tags:[T("grab","Mercure 組 Grab 約5分"),T("grab","Verandah 組 Grab 約15分")],more:["Mercure 組 MRT：Clarke Quay → Chinatown 1站，或沿河行約15分鐘","Verandah 組巴士：51 號一程車，約30分鐘"]}
-],tips:["今日 5 人同行，一齊 Grab 要叫 6-seater。"]},
+{id:"d4",tab:"10/18",wk:"日",title:"甘榜格南 · 克拉碼頭",sub:"阿拉伯街 → 新達城 → 讚美廣場 → 宏茂橋 → 克拉碼頭",meet:"",items:[
+ {t:"10:30am",n:"Blanco Court Prawn Mee 蝦麵",must:1,note:"可以分著食，留肚食午餐",tags:[T("mrt","Mercure 組：Telok Ayer → Bugis 4站"),T("grab","Verandah 組 Grab 約20分")],more:["Mercure 組出 Bugis 站再行約7分鐘","Verandah 組巴士：51 號一程車到 Victoria St，約45–50分鐘","星期日排隊較長"]},
+ {t:"11:15am",n:"Kampong Glam 阿拉伯區",note:"蘇丹回教堂 → Arab Street → Haji Lane（店舖約11am開）",tags:[T("walk","步行")]},
+ {t:"1:15pm",n:"The Coconut Club 椰漿飯",must:1,booked:"已訂位 1:15pm",note:"269 Beach Road",tags:[T("walk","步行")]},
+ {t:"2:40pm",n:"Suntec City 財富之泉",must:1,note:"地下一層（B1）；2–4pm 可以落去摸水許願，順時針行3圈，右手伸出水面默默許願；免費；摸完水可以喺商場冷氣歇腳、行街，逛到 4:30pm",tags:[T("grab","建議 Grab 約5分")],more:["由 Coconut Club 步行約1.3公里、20分鐘，下晝2點好曬又少遮蔭，長輩食飽唔建議行；5人叫 6-seater 約 S$10–14","摸水時段：10am–12pm、2–4pm、6–7:30pm","摸完水向保安攞印章，再去任何一個客戶服務櫃台，出示蓋咗印嘅卡同護照，免費換一個冰箱貼","當日喺新達城累計消費滿 S$200（或用支付寶滿 S$180），出示收據可以再換 S$15 代金券同鐵製冰箱貼","卡喺客戶服務櫃台攞；記得帶護照"]},
+ {t:"4:30pm",n:"CHIJMES 讚美廣場",note:"約1小時；百年教堂，周末多數有婚禮，睇外觀、迴廊同庭園",tags:[T("grab","Grab 約5–8分"),T("walk","或經 CityLink 地下行約12分，有冷氣")]},
+ {t:"6:00pm",n:"Mellben 龍海鮮螃蟹王",must:1,booked:"已訂位 6:00pm",note:"瓦煲螃蟹米粉湯；宏茂橋 Blk 232",tags:[T("grab","5:30pm 由 CHIJMES 出發，Grab 約25–30分")],more:["星期日傍晚叫車慢，可以 5:20pm 先叫","太攰的話：睇完財富之泉，家人先返酒店休息，再由酒店 Grab 過嚟","MRT：City Hall → Ang Mo Kio（紅線9站），約45分鐘"]},
+ {t:"8:00pm",n:"舊禧街警察局",note:"夜晚彩色窗亮燈",tags:[T("grab","Grab 約25分")],more:["MRT：Ang Mo Kio → Dhoby Ghaut → Clarke Quay，約35分鐘"]},
+ {t:"8:15pm",n:"新加坡河遊船",must:1,note:"Clarke Quay Jetty（Hooters 旁）上船，約40分鐘來回，經 Boat Quay、魚尾獅、金沙；星期日做到10:30pm",tags:[T("walk","警察局對面過橋")]},
+ {t:"9:00pm",n:"Clarke Quay 河邊散步",note:"散步作結",tags:[T("grab","Mercure 組 Grab 約5分"),T("grab","Verandah 組 Grab 約15分")],more:["Mercure 組 MRT：Clarke Quay → Chinatown 1站，或沿河行約15分鐘","Verandah 組巴士：51 號一程車，約30分鐘"]}
+],tips:["今日記得帶護照，喺新達城換遊客禮品要用。","財富之泉摸水：每日 10am–12pm、2–4pm、6–7:30pm；順時針繞噴泉行3圈，右手伸出水面默默許願，免費。","換禮品：摸水後向保安攞印章 → 去客戶服務櫃台出示蓋印卡同護照 → 免費冰箱貼；當日消費滿 S$200（支付寶 S$180）再加 S$15 代金券同鐵製冰箱貼。","今日 5 人同行，一齊 Grab 要叫 6-seater。"]},
 {id:"d5",tab:"10/19",wk:"一",title:"星耀樟宜 · 回程",sub:"退房 → Jewel 午餐 → Eric 入閘 → 買手信 → T4 上機",meet:"集合：Jewel Rain Vortex 瀑布 11:00am",items:[
  {t:"10:00am",n:"Check out",note:"唔使趕，可以喺酒店附近食早餐"},
  {t:"11:00am",n:"Jewel Changi Airport",note:"行李可以用 Jewel 嘅手推車推住行",tags:[T("grab","Mercure 組 Grab 約25分"),T("grab","Verandah 組 10:30am 出發，約30–35分")],more:["另一個做法：5人叫一架 6-seater，10:15am 由 Verandah 出發，經 Mercure 接媽媽、Jenny姨姨，約45分鐘","Grab 目的地揀「Jewel」或「Terminal 1」，兩個都係同一個入口","帶行李唔建議搭 MRT（約50–90分鐘）"]},
- {t:"11:45am",n:"Rain Vortex 瀑布 · 午餐",must:1,note:"松發肉骨茶（Jewel 分店）；Jewel Starbucks 亦可以蓋印"},
+ {t:"11:45am",n:"Rain Vortex 瀑布 · 午餐",must:1,stamp:1,note:"松發肉骨茶（Jewel 分店）；Starbucks Jewel（#02-204）可以蓋印，星期一開到 9pm"},
  {t:"12:45pm",n:"Queic by Olivia 芝士蛋糕",note:"Jewel 分店；買外賣可以帶上機"},
  {t:"1:15pm",n:"Eric 去 T1 check-in 入閘（TR982 3:25pm）",note:"食完嘢喺 Jewel 同大家道別",tags:[T("walk","Jewel 北面入口直入 T1，行約5分")],more:["Scoot 櫃位一般起飛前1小時截止，1:15pm 去時間充裕"]},
  {t:"1:15pm",n:"Jewel 行街買手信",note:"爸爸、媽媽、Jenny姨姨同 Kodie；約45分鐘，食品類手信記得放寄艙行李",tags:[T("walk","Jewel 內步行")],more:["T4 禁區內都有手信店，未買夠可以入閘後再補","行李可以用手推車推住行"]},
@@ -455,8 +455,7 @@ backup:{h:"如果吊橋封咗",l:["Palawan 照樣值得去：岸邊影到吊橋�
 ];
 const TODO=[
  ["chk1","確認 Spectra、Garden Rhapsody 場次","出發前睇官網"],
- ["chk2","確認 Palawan 吊橋有冇封","前一日睇 Sentosa 官網"],
- ["chk3","查財富之泉許願時段","Suntec City"],
+ ["chk3","第4日帶護照","新達城遊客禮品要出示護照"],
  ["chk4","網上 check-in","國泰 CX691 / CX734、Scoot TR983 / TR982"],
  ["pk1","帶有拍卡功能嘅信用卡","每人一張，用嚟搭 MRT 同巴士"],
  ["pk2","手機裝 Grab 同 Google Maps",""],
@@ -500,7 +499,7 @@ const icon=k=>`<svg viewBox="0 0 32 32" aria-hidden="true">${IC[k]||IC.pin}</svg
 const RULES=[[/Mercure|Check out/,'hotel'],[/抵達|T1|T4|上機|過關/,'plane'],[/Verandah|回程|分頭/,'home'],[/^往/,'taxi'],[/Chatterbox/,'rice'],[/Supply/,'bowl'],[/Merlion|魚尾獅/,'merlion'],[/Bridge/,'bridge'],[/Supertree|Skyway/,'tree'],[/Spectra|Wings/,'sparkle'],[/Ya Kun/,'toast'],[/Starbucks|Kopi/,'cup'],[/Yo-Chi/,'icecream'],[/Siloso|日落/,'sunset'],[/聖淘沙|Palawan|歪脖子|最南端/,'beach'],[/Shoppes|Orchard Road|VivoCity|手信|寶塔街/,'bag'],[/佛牙寺|興都廟/,'temple'],[/Floral|Flower|Cloud/,'flower'],[/Lau Pa Sat/,'satay'],[/Kampong/,'mosque'],[/CHIJMES/,'church'],[/Suntec|Rain Vortex/,'drop'],[/Mellben/,'crab'],[/警察局/,'police'],[/遊船|Clarke/,'boat'],[/Jewel/,'jewel'],[/Queic/,'cake'],[/Chinatown Complex|Prawn|Coconut/,'bowl']];
 const pick=n=>{for(const[r,k]of RULES)if(r.test(n))return k;return 'pin'};
 const FOODS=[
- ['toast','咖椰多士',1,'亞坤 Ya Kun'],['icecream','乳酪雪糕',1,'Yo-Chi'],['rice','文華雞飯',1,'Chatterbox Café'],
+ ['toast','咖央多士',1,'亞坤 Ya Kun'],['icecream','乳酪雪糕',1,'Yo-Chi'],['rice','文華雞飯',1,'Chatterbox Café'],
  ['bowl','叻沙',2,'牛車水大廈'],['cake','娘惹小吃',2,'牛車水大廈'],['cup','Kopi 南洋咖啡',2,'南洋老咖啡'],['satay','沙爹',2,'老巴剎'],
  ['bowl','蝦麵',3,'白蘭閣街蝦麵'],['rice','椰漿飯',3,'The Coconut Club'],['crab','海鮮・螃蟹',3,'Mellben 龍海鮮'],
  ['bowl','肉骨茶',4,'松發肉骨茶'],['cake','芝士蛋糕',4,'Queic by Olivia']
@@ -523,8 +522,8 @@ function show(i,anim){
  panel.setAttribute('aria-labelledby','tab-'+d.id);
  const bg=['var(--mizu-pale)','var(--yellow-pale)','var(--take-pale)','var(--coral-pale)','var(--mizu-pale)'][i];
  panel.innerHTML=`<div class="dayhead" style="background:${bg}">${SVGS[d.id]}<div><h3>Day ${i+1} · ${d.title}</h3><p>${d.sub}</p></div></div>
- <ol class="tl">${d.items.map(it=>`<li class="it${it.must?' must':''}"><div class="tm">${it.t}</div><div class="rail"><span class="dot"></span></div><div class="bd">
-  <h4><span class="ic">${icon(pick(it.n))}</span>${it.n}${it.must?'<span class="must-b">必去</span>':''}</h4>
+ <ol class="tl">${d.items.map(it=>`<li class="it"><div class="tm">${it.t}</div><div class="rail"><span class="dot"></span></div><div class="bd">
+  <h4><span class="ic">${icon(pick(it.n))}</span>${it.n}${it.booked?`<span class="book-b">✓ ${it.booked}</span>`:''}${it.stamp?'<span class="stamp-b">★ 蓋印</span>':''}</h4>
   ${it.note?`<p class="note">${it.note}</p>`:''}
   ${it.tags?`<div class="tags">${it.tags.map(tagHtml).join('')}</div>`:''}
   ${it.more?`<details class="more"><summary>其他交通・提醒</summary><ul>${it.more.map(m=>`<li>${m}</li>`).join('')}</ul></details>`:''}
